@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { css } from "@emotion/react";
+import { Author } from "../../components/ Author";
 
 const text =
   "\n" +
@@ -10,7 +11,7 @@ const text =
 export default function Post() {
   return (
     <div css={container}>
-      <h1 css={postTitle}>記事タイトル</h1>
+      <h1 css={postTitle}>記念パピコ🎉</h1>
       <div css={information}>
         <span css={date}>2021.06.29</span>
         <div css={tagContainer}>
@@ -30,10 +31,10 @@ export default function Post() {
         <h3>見出し3</h3>
         <p>{text}</p>
         <blockquote>引用文のテスト</blockquote>
-        <img
-          src="https://yuyakinoshita.com/wp-cms/wp-content/uploads/eyecatch-image-aspect-ratio-1280x720.png"
-          alt=""
-        />
+        <img src="https://source.unsplash.com/random" alt="ランダムイメージ" />
+      </div>
+      <div css={author}>
+        <Author />
       </div>
     </div>
   );
@@ -78,7 +79,7 @@ const tagContainer = css`
   display: grid;
   grid-auto-flow: column;
   justify-content: start;
-  column-gap: 5px;
+  column-gap: 8px;
 `;
 
 const categoryTag = css`
@@ -90,6 +91,10 @@ const imageContainer = css`
   position: relative;
   width: 100%;
   height: 395px;
+`;
+
+const author = css`
+  margin-top: 120px;
 `;
 
 const markdownStyle = css`
@@ -127,5 +132,6 @@ const markdownStyle = css`
   img {
     width: 100%;
     height: auto;
+    margin: 30px 0;
   }
 `;

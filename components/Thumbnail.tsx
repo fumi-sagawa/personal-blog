@@ -20,7 +20,7 @@ export const Thumbnail = () => {
             </p>
             <div css={tagContainer}>
               <span css={categoryTag}>雑記</span>
-              <span css={categoryTag}>雑記</span>
+              <span css={categoryTag}>開発</span>
             </div>
           </div>
         </a>

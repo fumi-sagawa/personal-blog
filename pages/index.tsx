@@ -1,10 +1,5 @@
 import { css } from "@emotion/react";
-import { Header } from "../components/Header";
-import Link from "next/link";
-import Image from "next/image";
 import { Thumbnail } from "../components/Thumbnail";
-import { Footer } from "../components/Footer";
-import { Layout } from "../components/Layout";
 
 export default function Home() {
   return (

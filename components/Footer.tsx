@@ -9,7 +9,7 @@ export const Footer = () => {
 };
 
 const footer = css`
-  padding: 100px 0px 34px 0px;
+  padding: 100px 0 34px 0;
   display: grid;
   justify-items: center;
   font-size: 14px;
