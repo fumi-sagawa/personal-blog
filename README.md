@@ -1,5 +1,5 @@
 個人ブログのリポジトリです。   
-HeadlessCMSとしてstrapi、フロントをNext.jsで構成しています。
+HeadlessCMSとしてstrapi、フロントをNext.jsで構成しています。  
 https://www.arifureta.net/
 
 ## 開発環境
