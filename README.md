@@ -1,16 +1,23 @@
 個人ブログのリポジトリです。   
-HeadlessCMSとしてstrapi、フロントをNext.jsで構成しています。(開発中)
+HeadlessCMSとしてstrapi、フロントをNext.jsで構成しています。
+https://www.arifureta.net/
 
-## 環境
+## 開発環境
 ### フロント
 * Next.js
 * Typescript
 * Emotion
 * react-markdown
 * graphql-request
+* Vercel
 ### バック
 * Strapi
-* GAE（検討中)
+
+## ホスティング
+### フロント
+* Vercel
+### バック
+* Heroku
 
 ## 実行方法
 ```

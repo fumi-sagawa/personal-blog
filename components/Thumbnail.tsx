@@ -61,12 +61,12 @@ const title = css`
   font-weight: 600;
   color: #242424;
   line-height: 28px;
-  margin: 14px 0 10px 0;
+  margin: 14px 0 4px 0;
 `;
 const description = css`
   font-size: 14px;
   line-height: 22px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   color: #6f7980;
 `;
 

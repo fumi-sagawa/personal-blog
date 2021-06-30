@@ -89,7 +89,7 @@ const thumbnailGrid = css`
   //grid-template-columns: repeat(3, 1fr);
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   column-gap: 38px;
-  row-gap: 88px;
+  row-gap: 70px;
 `;
 
 export default Home;
