@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { css } from "@emotion/react";
 import React from "react";
+import { herokuUrl } from "../variables/url";
 
 type Props = {
   id: string;
@@ -13,9 +14,8 @@ type Props = {
   post_types: [{ postType?: string }];
 };
 
-const domainUrl = "http://localhost:1337";
-
 export const Thumbnail: React.VFC<Props> = (props) => {
+  const cmsUrl = herokuUrl;
   return (
     <>
       <Link href={`/posts/${props.slug}`}>
@@ -23,7 +23,7 @@ export const Thumbnail: React.VFC<Props> = (props) => {
           <div>
             <p css={date}>{props.published_at}</p>
             <Image
-              src={domainUrl + props.thumbnailUrl}
+              src={cmsUrl + props.thumbnailUrl}
               alt=""
               width={800}
               height={450}

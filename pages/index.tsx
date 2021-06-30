@@ -3,6 +3,7 @@ import { Thumbnail } from "../components/Thumbnail";
 import { request } from "graphql-request";
 import React from "react";
 import { GetStaticProps } from "next";
+import { graphqlUrl } from "../variables/url";
 
 export const getStaticProps: GetStaticProps = async () => {
   const query = `
@@ -22,7 +23,8 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
   `;
-  const post = await request(process.env.CMS_URL, query);
+
+  const post = await request(graphqlUrl, query);
   return { props: { blogposts: post.blogposts } };
 };
 

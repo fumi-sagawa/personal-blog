@@ -5,7 +5,7 @@ import { request } from "graphql-request";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { GetStaticProps, GetStaticPaths } from "next";
-import { format } from "date-fns";
+import { graphqlUrl, herokuUrl } from "../../variables/url";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const query = `
@@ -17,7 +17,8 @@ slug
 }
 
   `;
-  const posts = await request(process.env.CMS_URL, query);
+  // @ts-ignore
+  const posts = await request(graphqlUrl, query);
   return {
     paths: posts.blogposts.map((post: { id: string; slug: string }) => ({
       params: {
@@ -48,6 +49,7 @@ post_types{
 }
 
   `;
+  // @ts-ignore
   const data = await request(process.env.CMS_URL, query);
   //graphQLのwhereクエリの仕様で返り値が配列となるため
   return { props: { blogpost: data.blogposts[0] } };
@@ -67,9 +69,8 @@ type Props = {
   };
 };
 
-const domainUrl = "http://localhost:1337";
-
 const Post: React.VFC<Props> = ({ blogpost }) => {
+  const cmsUrl = herokuUrl;
   return (
     <div css={container}>
       <h1 css={postTitle}>{blogpost.title}</h1>
@@ -86,7 +87,7 @@ const Post: React.VFC<Props> = ({ blogpost }) => {
         </div>
       </div>
       <Image
-        src={domainUrl + blogpost.thumbnail.url}
+        src={cmsUrl + blogpost.thumbnail.url}
         alt=""
         width={800}
         height={450}
