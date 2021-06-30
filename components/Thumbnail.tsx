@@ -61,7 +61,7 @@ const title = css`
   font-weight: 600;
   color: #242424;
   line-height: 28px;
-  margin: 14px 0;
+  margin: 14px 0 10px 0;
 `;
 const description = css`
   font-size: 14px;
@@ -80,7 +80,11 @@ const tagContainer = css`
 const categoryTag = css`
   font-size: 13px;
   color: #6f7980;
+  //&:before {
+  //  content: "# ";
+  //  font-size: 16px;
+  //}
   border: 1px solid #6f7980;
-  padding: 4px 9px;
+  padding: 3px 9px 2px 9px;
   border-radius: 99px;
 `;

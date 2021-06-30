@@ -17,7 +17,7 @@ slug
 }
 
   `;
-  const posts = await request("http://localhost:1337/graphql", query);
+  const posts = await request(process.env.CMS_URL, query);
   return {
     paths: posts.blogposts.map((post: { id: string; slug: string }) => ({
       params: {
@@ -48,7 +48,7 @@ post_types{
 }
 
   `;
-  const data = await request("http://localhost:1337/graphql", query);
+  const data = await request(process.env.CMS_URL, query);
   //graphQLのwhereクエリの仕様で返り値が配列となるため
   return { props: { blogpost: data.blogposts[0] } };
 };
@@ -102,7 +102,7 @@ const Post: React.VFC<Props> = ({ blogpost }) => {
 };
 
 const container = css`
-  padding-top: 270px;
+  padding-top: 220px;
   display: grid;
   //幅の確保
   grid-template-columns:

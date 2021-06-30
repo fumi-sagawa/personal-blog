@@ -22,7 +22,7 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
   `;
-  const post = await request("http://localhost:1337/graphql", query);
+  const post = await request(process.env.CMS_URL, query);
   return { props: { blogposts: post.blogposts } };
 };
 
