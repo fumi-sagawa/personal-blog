@@ -5,6 +5,7 @@ import React from "react";
 
 type Props = {
   id: string;
+  slug: string;
   title: string;
   overview: string;
   thumbnailUrl: string;
@@ -17,7 +18,7 @@ const domainUrl = "http://localhost:1337";
 export const Thumbnail: React.VFC<Props> = (props) => {
   return (
     <>
-      <Link href={`/posts/${props.id}`}>
+      <Link href={`/posts/${props.slug}`}>
         <a>
           <div>
             <p css={date}>{props.published_at}</p>

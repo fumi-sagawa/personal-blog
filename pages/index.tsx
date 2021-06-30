@@ -8,8 +8,8 @@ export async function getStaticProps() {
   query getBlogposts {
   blogposts {
     id
+    slug
     title
-    text
     overview
     thumbnail{
       url
@@ -30,8 +30,8 @@ type Props = {
   blogposts: [
     {
       id: string;
+      slug: string;
       title: string;
-      text: string;
       overview: string;
       thumbnail: {
         url: string;
@@ -51,6 +51,7 @@ const Home: React.VFC<Props> = ({ blogposts }) => {
             <Thumbnail
               key={blogpost.id}
               id={blogpost.id}
+              slug={blogpost.slug}
               title={blogpost.title}
               overview={blogpost.overview}
               post_types={blogpost.post_types}
