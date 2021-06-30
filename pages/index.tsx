@@ -1,20 +1,68 @@
 import { css } from "@emotion/react";
 import { Thumbnail } from "../components/Thumbnail";
+import { request } from "graphql-request";
+import React from "react";
 
-export default function Home() {
+export async function getStaticProps() {
+  const query = `
+  query getBlogposts {
+  blogposts {
+    id
+    title
+    text
+    overview
+    thumbnail{
+      url
+    }
+    published_at
+    post_types{
+      postType
+    }
+  }
+}
+  `;
+
+  const post = await request("http://localhost:1337/graphql", query);
+  return { props: { blogposts: post.blogposts } };
+}
+
+type Props = {
+  blogposts: [
+    {
+      id: string;
+      title: string;
+      text: string;
+      overview: string;
+      thumbnail: {
+        url: string;
+      };
+      published_at: string;
+      post_types: [{ postType?: string }];
+    }
+  ];
+};
+
+const Home: React.VFC<Props> = ({ blogposts }) => {
   return (
     <>
       <div css={container}>
         <div css={thumbnailGrid}>
-          <Thumbnail />
-          <Thumbnail />
-          <Thumbnail />
-          <Thumbnail />
+          {blogposts.map((blogpost) => (
+            <Thumbnail
+              key={blogpost.id}
+              id={blogpost.id}
+              title={blogpost.title}
+              overview={blogpost.overview}
+              post_types={blogpost.post_types}
+              thumbnailUrl={blogpost.thumbnail.url}
+              published_at={blogpost.published_at}
+            />
+          ))}
         </div>
       </div>
     </>
   );
-}
+};
 
 const container = css`
   padding-top: 280px;
@@ -37,3 +85,14 @@ const thumbnailGrid = css`
   column-gap: 38px;
   row-gap: 88px;
 `;
+
+export default Home;
+
+// <div>
+//   {blogposts.map((blogpost) => (
+//     <div key={blogpost.id}>
+//       {blogpost.title + blogpost.overview}
+//       <img src={domainUrl + blogpost.thumbnail.url} alt="" />
+//     </div>
+//   ))}
+// </div>

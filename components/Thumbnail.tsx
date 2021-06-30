@@ -1,26 +1,40 @@
 import Image from "next/image";
 import Link from "next/link";
 import { css } from "@emotion/react";
+import React from "react";
 
-export const Thumbnail = () => {
+type Props = {
+  id: string;
+  title: string;
+  overview: string;
+  thumbnailUrl: string;
+  published_at: string;
+  post_types: [{ postType?: string }];
+};
+
+const domainUrl = "http://localhost:1337";
+
+export const Thumbnail: React.VFC<Props> = (props) => {
   return (
     <>
-      <Link href="/posts/1">
+      <Link href={`/posts/${props.id}`}>
         <a>
           <div>
-            <p css={date}> 2021.06.29</p>
-            <Image src="/nyan-cat.jpg" alt="" width={800} height={450} />
-            <h1 css={title}>
-              {" "}
-              良いタイトル思いつかないから、とりあえず記念パピコ🎉
-            </h1>
-            <p css={description}>
-              なんかいい感じのディスクリプション。
-              これはどっから持ってくるかな。
-            </p>
+            <p css={date}>{props.published_at}</p>
+            <Image
+              src={domainUrl + props.thumbnailUrl}
+              alt=""
+              width={800}
+              height={450}
+            />
+            <h1 css={title}>{props.title}</h1>
+            <p css={description}>{props.overview}</p>
             <div css={tagContainer}>
-              <span css={categoryTag}>雑記</span>
-              <span css={categoryTag}>開発</span>
+              {props.post_types.map((post_type) => (
+                <span key={post_type.postType} css={categoryTag}>
+                  {post_type.postType}
+                </span>
+              ))}
             </div>
           </div>
         </a>
