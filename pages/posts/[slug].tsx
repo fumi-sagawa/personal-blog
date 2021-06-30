@@ -4,7 +4,8 @@ import { Author } from "../../components/ Author";
 import { request } from "graphql-request";
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import { GetStaticPaths } from "next";
+import { GetStaticProps, GetStaticPaths } from "next";
+import { format } from "date-fns";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const query = `
@@ -28,9 +29,8 @@ slug
   };
 };
 
-export async function getStaticProps(context) {
+export const getStaticProps: GetStaticProps = async (context: any) => {
   const slug = context.params.slug;
-  console.log(slug);
   const query = `
  query getBlogposts {
 blogposts(where: {slug:"${slug}"}) {
@@ -49,10 +49,9 @@ post_types{
 
   `;
   const data = await request("http://localhost:1337/graphql", query);
-  console.log(data);
   //graphQLのwhereクエリの仕様で返り値が配列となるため
   return { props: { blogpost: data.blogposts[0] } };
-}
+};
 
 type Props = {
   blogpost: {
@@ -75,7 +74,9 @@ const Post: React.VFC<Props> = ({ blogpost }) => {
     <div css={container}>
       <h1 css={postTitle}>{blogpost.title}</h1>
       <div css={information}>
-        <span css={date}>{blogpost.published_at}</span>
+        <span css={date}>
+          {blogpost.published_at.split("T")[0].replace(/-/g, ".")}
+        </span>
         <div css={tagContainer}>
           {blogpost.post_types.map((post_type) => (
             <span key={post_type.postType} css={categoryTag}>

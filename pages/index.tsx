@@ -2,11 +2,12 @@ import { css } from "@emotion/react";
 import { Thumbnail } from "../components/Thumbnail";
 import { request } from "graphql-request";
 import React from "react";
+import { GetStaticProps } from "next";
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const query = `
   query getBlogposts {
-  blogposts {
+  blogposts( sort: "id:DESC") {
     id
     slug
     title
@@ -21,10 +22,9 @@ export async function getStaticProps() {
   }
 }
   `;
-
   const post = await request("http://localhost:1337/graphql", query);
   return { props: { blogposts: post.blogposts } };
-}
+};
 
 type Props = {
   blogposts: [
@@ -56,7 +56,9 @@ const Home: React.VFC<Props> = ({ blogposts }) => {
               overview={blogpost.overview}
               post_types={blogpost.post_types}
               thumbnailUrl={blogpost.thumbnail.url}
-              published_at={blogpost.published_at}
+              published_at={blogpost.published_at
+                .split("T")[0]
+                .replace(/-/g, ".")}
             />
           ))}
         </div>
@@ -88,12 +90,3 @@ const thumbnailGrid = css`
 `;
 
 export default Home;
-
-// <div>
-//   {blogposts.map((blogpost) => (
-//     <div key={blogpost.id}>
-//       {blogpost.title + blogpost.overview}
-//       <img src={domainUrl + blogpost.thumbnail.url} alt="" />
-//     </div>
-//   ))}
-// </div>
