@@ -3,7 +3,6 @@ import { Thumbnail } from "../components/Thumbnail";
 import { request } from "graphql-request";
 import React from "react";
 import { GetStaticProps } from "next";
-import { graphqlUrl } from "../variables/url";
 
 export const getStaticProps: GetStaticProps = async () => {
   const query = `
@@ -23,8 +22,10 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
   `;
-
-  const post = await request(graphqlUrl, query);
+  const post = await request(
+    "https://whispering-peak-52867.herokuapp.com/graphql",
+    query
+  );
   return { props: { blogposts: post.blogposts } };
 };
 

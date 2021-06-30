@@ -5,7 +5,8 @@ import { request } from "graphql-request";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { GetStaticProps, GetStaticPaths } from "next";
-import { graphqlUrl, herokuUrl } from "../../variables/url";
+import { format } from "date-fns";
+import { herokuUrl } from "../../variables/url";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const query = `
@@ -18,7 +19,10 @@ slug
 
   `;
   // @ts-ignore
-  const posts = await request(graphqlUrl, query);
+  const posts = await request(
+    "https://whispering-peak-52867.herokuapp.com/graphql",
+    query
+  );
   return {
     paths: posts.blogposts.map((post: { id: string; slug: string }) => ({
       params: {
@@ -50,7 +54,10 @@ post_types{
 
   `;
   // @ts-ignore
-  const data = await request(process.env.CMS_URL, query);
+  const data = await request(
+    "https://whispering-peak-52867.herokuapp.com/graphql",
+    query
+  );
   //graphQLのwhereクエリの仕様で返り値が配列となるため
   return { props: { blogpost: data.blogposts[0] } };
 };
