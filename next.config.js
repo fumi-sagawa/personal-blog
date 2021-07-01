@@ -7,6 +7,7 @@ module.exports = {
       "localhost",
       "whispering-peak-52867.herokuapp.com",
       "herokuapp.com",
+      "media.graphcms.com",
     ],
   },
 };

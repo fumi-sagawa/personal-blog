@@ -3,11 +3,12 @@ import { Thumbnail } from "../components/Thumbnail";
 import { request } from "graphql-request";
 import React from "react";
 import { GetStaticProps } from "next";
+import { graphCmslUrl } from "../variables/url";
 
 export const getStaticProps: GetStaticProps = async () => {
   const query = `
   query getBlogposts {
-  blogposts( sort: "id:DESC") {
+  blogposts(orderBy: publishedAt_DESC)  {
     id
     slug
     title
@@ -15,17 +16,14 @@ export const getStaticProps: GetStaticProps = async () => {
     thumbnail{
       url
     }
-    published_at
-    post_types{
+    updatedAt
+    postTypes{
       postType
     }
   }
 }
   `;
-  const post = await request(
-    "https://whispering-peak-52867.herokuapp.com/graphql",
-    query
-  );
+  const post = await request(graphCmslUrl, query);
   return { props: { blogposts: post.blogposts } };
 };
 
@@ -39,8 +37,8 @@ type Props = {
       thumbnail: {
         url: string;
       };
-      published_at: string;
-      post_types: [{ postType?: string }];
+      updatedAt: string;
+      postTypes: [{ postType?: string }];
     }
   ];
 };
@@ -57,11 +55,9 @@ const Home: React.VFC<Props> = ({ blogposts }) => {
               slug={blogpost.slug}
               title={blogpost.title}
               overview={blogpost.overview}
-              post_types={blogpost.post_types}
+              postTypes={blogpost.postTypes}
               thumbnailUrl={blogpost.thumbnail.url}
-              published_at={blogpost.published_at
-                .split("T")[0]
-                .replace(/-/g, ".")}
+              updatedAt={blogpost.updatedAt.split("T")[0].replace(/-/g, ".")}
             />
           ))}
         </div>

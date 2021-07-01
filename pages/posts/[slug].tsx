@@ -6,23 +6,19 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { format } from "date-fns";
-import { herokuUrl } from "../../variables/url";
+import { graphCmslUrl, herokuUrl } from "../../variables/url";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const query = `
 query getBlogposts {
   blogposts {
     id
-slug
+    slug
   }
 }
 
   `;
-  // @ts-ignore
-  const posts = await request(
-    "https://whispering-peak-52867.herokuapp.com/graphql",
-    query
-  );
+  const posts = await request(graphCmslUrl, query);
   return {
     paths: posts.blogposts.map((post: { id: string; slug: string }) => ({
       params: {
@@ -38,26 +34,22 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
   const slug = context.params.slug;
   const query = `
  query getBlogposts {
-blogposts(where: {slug:"${slug}"}) {
+  blogposts(where: {slug:"${slug}"}) {
     id
     title
     text
     thumbnail{
       url
     }
-    published_at
-post_types{
+    updatedAt
+    postTypes{
       postType
     }
   }
 }
 
   `;
-  // @ts-ignore
-  const data = await request(
-    "https://whispering-peak-52867.herokuapp.com/graphql",
-    query
-  );
+  const data = await request(graphCmslUrl, query);
   //graphQLのwhereクエリの仕様で返り値が配列となるため
   return { props: { blogpost: data.blogposts[0] } };
 };
@@ -71,34 +63,28 @@ type Props = {
     thumbnail: {
       url: string;
     };
-    published_at: string;
-    post_types: [{ postType?: string }];
+    updatedAt: string;
+    postTypes: [{ postType?: string }];
   };
 };
 
 const Post: React.VFC<Props> = ({ blogpost }) => {
-  const cmsUrl = herokuUrl;
   return (
     <div css={container}>
       <h1 css={postTitle}>{blogpost.title}</h1>
       <div css={information}>
         <span css={date}>
-          {blogpost.published_at.split("T")[0].replace(/-/g, ".")}
+          {blogpost.updatedAt.split("T")[0].replace(/-/g, ".")}
         </span>
         <div css={tagContainer}>
-          {blogpost.post_types.map((post_type) => (
+          {blogpost.postTypes.map((post_type) => (
             <span key={post_type.postType} css={categoryTag}>
               {post_type.postType}
             </span>
           ))}
         </div>
       </div>
-      <Image
-        src={cmsUrl + blogpost.thumbnail.url}
-        alt=""
-        width={800}
-        height={450}
-      />
+      <Image src={blogpost.thumbnail.url} alt="" width={800} height={450} />
       <div css={markdownStyle}>
         <ReactMarkdown>{blogpost.text}</ReactMarkdown>
       </div>

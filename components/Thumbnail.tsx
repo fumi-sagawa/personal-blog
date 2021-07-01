@@ -10,28 +10,22 @@ type Props = {
   title: string;
   overview: string;
   thumbnailUrl: string;
-  published_at: string;
-  post_types: [{ postType?: string }];
+  updatedAt: string;
+  postTypes: [{ postType?: string }];
 };
 
 export const Thumbnail: React.VFC<Props> = (props) => {
-  const cmsUrl = herokuUrl;
   return (
     <>
       <Link href={`/posts/${props.slug}`}>
         <a>
           <div>
-            <p css={date}>{props.published_at}</p>
-            <Image
-              src={cmsUrl + props.thumbnailUrl}
-              alt=""
-              width={800}
-              height={450}
-            />
+            <p css={date}>{props.updatedAt}</p>
+            <Image src={props.thumbnailUrl} alt="" width={800} height={450} />
             <h1 css={title}>{props.title}</h1>
             <p css={description}>{props.overview}</p>
             <div css={tagContainer}>
-              {props.post_types.map((post_type) => (
+              {props.postTypes.map((post_type) => (
                 <span key={post_type.postType} css={categoryTag}>
                   {post_type.postType}
                 </span>
