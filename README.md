@@ -9,7 +9,6 @@ https://www.arifureta.net/
 * Emotion
 * react-markdown
 * graphql-request
-* Vercel
 ### バック
 * Strapi
 
