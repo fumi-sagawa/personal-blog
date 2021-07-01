@@ -1,5 +1,5 @@
 個人ブログのリポジトリです。   
-HeadlessCMSとしてstrapi、フロントをNext.jsで構成しています。  
+HeadlessCMSとしてGraphCMS、フロントをNext.jsで構成しています。  
 https://www.arifureta.net/
 
 ## 開発環境
@@ -10,13 +10,15 @@ https://www.arifureta.net/
 * react-markdown
 * graphql-request
 ### バック
-* Strapi
+* ~~Strapi~~  (2021/07/01 変更)
+* GraphCMS
 
 ## ホスティング
 ### フロント
 * Vercel
 ### バック
-* Heroku
+* ~~Heroku~~
+  (2021/07/01 変更)
 
 ## 実行方法
 ```
